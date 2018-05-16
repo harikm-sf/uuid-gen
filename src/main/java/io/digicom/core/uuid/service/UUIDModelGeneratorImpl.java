@@ -1,10 +1,10 @@
 package io.digicom.core.uuid.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.UUID;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import io.digicom.core.uuid.model.UUIDModel;
@@ -15,11 +15,12 @@ public class UUIDModelGeneratorImpl extends BaseService implements UUIDModelGene
 	
 
 	@Override
-	@Async
-	public UUIDModel getUUIDModel() {
+	//@Async
+	public UUIDModel getUUIDModel() throws UnsupportedEncodingException {
 		UUIDModel model = new UUIDModel();
 		UUID uuid =UUID.randomUUID();
-		String base64 = Base64.encodeBase64String(uuid.toString().getBytes());
+		byte[] bytesOfUUID = uuid.toString().getBytes("UTF-8");
+		String base64 = Base64.encodeBase64String(bytesOfUUID);
 		model.setUuid(uuid)
 		.setDateTime(new Date())
 		.setBase64(base64);

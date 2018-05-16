@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableLoadTimeWeaving;
+import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.ItemListenerConfig;
@@ -24,6 +28,7 @@ import com.hazelcast.spring.cache.HazelcastCacheManager;
 import io.digicom.core.uuid.handlers.ListEventHandler;
 
 @Configuration
+@EnableAsync
 public class HazelcastConfig {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -73,6 +78,7 @@ public class HazelcastConfig {
 		//config.getManagementCenterConfig().setEnabled(true).setUrl("http://localhost:8082/mancenter")
 				//.setUpdateInterval(3);
 		config.getServicesConfig().setEnableDefaults(true);
+		config.setInstanceName("UUIDGEN");
 		return config;
 	}
 

@@ -1,12 +1,10 @@
 package io.digicom.core.uuid.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.hazelcast.core.HazelcastInstance;
@@ -28,17 +26,32 @@ public class UUIDFactoryImpl extends BaseService implements UUIDFactory {
 	
 	
 	@Override
-	public UUIDModel getOne() {
+	public List<UUIDModel> getOne() throws UnsupportedEncodingException {
 		List<UUIDModel> uuidList =  hci.getList("UUIDLIST");
 		UUIDModel model = uuidList.get(0);
 		uuidList.remove(0);
-		return model;
+		uuidListManager.addUUIDs(ONE);
+		List<UUIDModel> retVal = new ArrayList<UUIDModel>();
+		retVal.add(model);
+		return retVal;
 	}
 
 	@Override
-	public List<UUIDModel> getMany(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<UUIDModel> getMany(int num) throws UnsupportedEncodingException {
+		List<UUIDModel> uuidList =  hci.getList("UUIDLIST");
+		if(num > uuidList.size()) {
+			logger.debug("Have to add more to the list right now");
+			uuidListManager.addUUIDs(num - uuidList.size());
+		}
+		List<UUIDModel> retVal = new ArrayList<UUIDModel>();
+		for(int i = 0; i< num; i++) {
+			retVal.add(uuidList.get(0));
+			uuidList.remove(0);
+		}
+		uuidListManager.addUUIDs(num);
+		logger.debug("RETURNING RESULT");
+		return retVal;
+		
 	}
 
 	

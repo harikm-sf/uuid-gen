@@ -1,9 +1,10 @@
 package io.digicom.core.uuid.controller;
 
-import java.io.Serializable;
-import java.util.UUID;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,15 +19,13 @@ public class UUIDController  {
 	UUIDFactory uuidFactory;
 	
 	@RequestMapping(value = "/uuid", method = RequestMethod.GET, produces = "application/json")
-	public UUIDModel getUUID() {
+	public List<UUIDModel> getUUID() throws UnsupportedEncodingException {
 		return uuidFactory.getOne();
 	}
 	
-	@RequestMapping(value = "/uuid2", method = RequestMethod.GET, produces = "application/json")
-	public UUIDModel getUUID2() {
-		UUIDModel model = new UUIDModel();
-		model.setUuid(UUID.randomUUID());
-		return model;
+	@RequestMapping(value = "/uuid/{num}", method = RequestMethod.GET, produces = "application/json")
+	public List<UUIDModel> getUUID2(@PathVariable(value="num") int num) throws UnsupportedEncodingException {
+		return uuidFactory.getMany(num);
 	}
 
 }

@@ -1,18 +1,17 @@
 package io.digicom.core.uuid.service;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import io.digicom.core.uuid.model.UUIDList;
-import io.digicom.core.uuid.model.UUIDModel;
-
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IList;
-import com.hazelcast.core.ItemEvent;
-import com.hazelcast.core.ItemListener;
+
+import io.digicom.core.uuid.model.UUIDModel;
 
 
 
@@ -21,7 +20,11 @@ public class UUIDListManagerImpl extends BaseService implements UUIDListManager 
 	
 
 	private static final long serialVersionUID = 232240097070121931L;
-
+	
+	private static final int INIT_LIST_SIZE=25;
+	
+	private int listSize = 25;
+	
 	@Autowired
 	HazelcastInstance hci;
 	
@@ -29,23 +32,38 @@ public class UUIDListManagerImpl extends BaseService implements UUIDListManager 
 	UUIDModelGenerator modelGenerator;
 	
 	@Override
-	//@Async
-	public void addUUIDs(int num) {
+	@Async
+	public void addUUIDs(int num) throws UnsupportedEncodingException {
 		IList<UUIDModel> list = hci.getList("UUIDLIST");
 		for(int i = 0; i < num ; i++) {
-			list.add(modelGenerator.getUUIDModel());
+			UUIDModel model = (modelGenerator.getUUIDModel());
+			list.add(model);
 		}
 	}
 	
+	@Override
+	public void addUUIDsSync(int num) throws UnsupportedEncodingException {
+		IList<UUIDModel> list = hci.getList("UUIDLIST");
+		for(int i = 0; i < num ; i++) {
+			UUIDModel model = (modelGenerator.getUUIDModel());
+			list.add(model);
+		}
+		
+	}
+	
 	@PostConstruct
-	public void init() {
+	public void init() throws UnsupportedEncodingException {
 		logger.debug("Initializing the list with startup list");
 		IList<UUIDModel> list = hci.getList("UUIDLIST");
 		if(list.isEmpty()) {
-			addUUIDs(100);
-		}else if(list.size() < 100) {
-			addUUIDs(100-list.size());
+			addUUIDs(INIT_LIST_SIZE);
+		}else if(list.size() < INIT_LIST_SIZE) {
+			addUUIDs(INIT_LIST_SIZE - list.size());
 		}
 	}
+
+
+
+	
 
 }

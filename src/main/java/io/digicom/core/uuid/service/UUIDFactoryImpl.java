@@ -1,6 +1,7 @@
 package io.digicom.core.uuid.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +30,9 @@ public class UUIDFactoryImpl extends BaseService implements UUIDFactory {
 	@Override
 	public UUIDModel getOne() {
 		List<UUIDModel> uuidList =  hci.getList("UUIDLIST");
-		UUIDModel model = uuidList.get(0);
+		UUIDModel model = uuidList.get(0)
+				.setDateTime(new Date());
+
 		uuidList.remove(0);
 		return model;
 	}

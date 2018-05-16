@@ -1,6 +1,7 @@
 package io.digicom.core.uuid.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 public class UUIDModel implements Serializable {
@@ -8,6 +9,8 @@ public class UUIDModel implements Serializable {
 
 	private static final long serialVersionUID = -4704777149181849049L;
 	private UUID uuid;
+	
+	private Date dateTime;
 
 	public UUID getUuid() {
 		return uuid;
@@ -18,10 +21,16 @@ public class UUIDModel implements Serializable {
 		return this;
 	}
 
-	@Override
-	public String toString() {
-		return "UUIDModel [uuid=" + uuid + "]";
+	public Date getDateTime() {
+		return dateTime;
 	}
+
+	public UUIDModel setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+		return this;
+	}
+
+	
 	
 	
 

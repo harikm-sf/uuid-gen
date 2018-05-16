@@ -23,11 +23,10 @@ public class ListEventHandler extends BaseHandler implements ItemListener<UUIDMo
 	}
 
 	@Override
-	//@Async
+	@Async
 	public void itemRemoved(ItemEvent<UUIDModel> itemEvent) {
 		String source  =(String) itemEvent.getSource();
 		logger.trace("Item removed :" + itemEvent.getItem() + " from " + source);
-		
 		manager.addUUIDs(1);
 	}
 

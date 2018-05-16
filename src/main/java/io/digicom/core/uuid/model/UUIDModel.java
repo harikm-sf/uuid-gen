@@ -11,6 +11,8 @@ public class UUIDModel implements Serializable {
 	private UUID uuid;
 	
 	private Date dateTime;
+	
+	private String base64;
 
 	public UUID getUuid() {
 		return uuid;
@@ -28,6 +30,20 @@ public class UUIDModel implements Serializable {
 	public UUIDModel setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
 		return this;
+	}
+
+	public String getBase64() {
+		return base64;
+	}
+
+	public UUIDModel setBase64(String base64) {
+		this.base64 = base64;
+		return this;
+	}
+
+	@Override
+	public String toString() {
+		return "UUIDModel [uuid=" + uuid + ", dateTime=" + dateTime + ", base64=" + base64 + "]";
 	}
 
 	

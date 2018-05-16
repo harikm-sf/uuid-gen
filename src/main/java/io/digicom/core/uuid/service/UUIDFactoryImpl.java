@@ -30,9 +30,7 @@ public class UUIDFactoryImpl extends BaseService implements UUIDFactory {
 	@Override
 	public UUIDModel getOne() {
 		List<UUIDModel> uuidList =  hci.getList("UUIDLIST");
-		UUIDModel model = uuidList.get(0)
-				.setDateTime(new Date());
-
+		UUIDModel model = uuidList.get(0);
 		uuidList.remove(0);
 		return model;
 	}

@@ -13,6 +13,10 @@ public class UUIDModel implements Serializable {
 	private Date dateTime;
 	
 	private String base64;
+	
+	private String md5Hex;
+	
+	private byte[] md5;
 
 	public UUID getUuid() {
 		return uuid;
@@ -41,10 +45,31 @@ public class UUIDModel implements Serializable {
 		return this;
 	}
 
+	public String getMd5Hex() {
+		return md5Hex;
+	}
+
+	public UUIDModel setMd5Hex(String md5Hex) {
+		this.md5Hex = md5Hex;
+		return this;
+	}
+
+	public byte [] getMd5() {
+		return md5;
+	}
+
+	public UUIDModel setMd5(byte [] md5) {
+		this.md5 = md5;
+		return this;
+	}
+
 	@Override
 	public String toString() {
-		return "UUIDModel [uuid=" + uuid + ", dateTime=" + dateTime + ", base64=" + base64 + "]";
+		return "UUIDModel [uuid=" + uuid + ", dateTime=" + dateTime + ", base64=" + base64 + ", md5Hex=" + md5Hex
+				+ ", md5=" + md5 + "]";
 	}
+
+	
 
 	
 	

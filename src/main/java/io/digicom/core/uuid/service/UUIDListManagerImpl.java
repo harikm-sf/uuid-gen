@@ -19,6 +19,9 @@ import com.hazelcast.core.ItemListener;
 @Service
 public class UUIDListManagerImpl extends BaseService implements UUIDListManager {
 	
+
+	private static final long serialVersionUID = 232240097070121931L;
+
 	@Autowired
 	HazelcastInstance hci;
 	
@@ -26,7 +29,7 @@ public class UUIDListManagerImpl extends BaseService implements UUIDListManager 
 	UUIDModelGenerator modelGenerator;
 	
 	@Override
-	@Async
+	//@Async
 	public void addUUIDs(int num) {
 		IList<UUIDModel> list = hci.getList("UUIDLIST");
 		for(int i = 0; i < num ; i++) {
@@ -36,6 +39,7 @@ public class UUIDListManagerImpl extends BaseService implements UUIDListManager 
 	
 	@PostConstruct
 	public void init() {
+		logger.debug("Initializing the list with startup list");
 		IList<UUIDModel> list = hci.getList("UUIDLIST");
 		if(list.isEmpty()) {
 			addUUIDs(100);

@@ -10,7 +10,6 @@ import com.hazelcast.core.ItemListener;
 import io.digicom.core.uuid.model.UUIDModel;
 import io.digicom.core.uuid.service.UUIDListManager;
 
-@Component
 public class ListEventHandler extends BaseHandler implements ItemListener<UUIDModel> {
 	
 	@Autowired

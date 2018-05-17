@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 

@@ -4,6 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +31,19 @@ public class UUIDController  {
 	
 	@RequestMapping(value = {"/{num}", "/", ""}, method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public List<UUIDModel> getUUID2(@Nullable @PathVariable(value="num") Integer num) throws UnsupportedEncodingException {
+	public ResponseEntity<List<UUIDModel>> getUUID2(@Nullable @PathVariable(value="num") Integer num) throws UnsupportedEncodingException {
+		long start = System.currentTimeMillis();
 		num = (num == null || num <= 0) ? 1 : num;
-		return uuidFactory.getMany(num.intValue());
+		List<UUIDModel> returnVal = uuidFactory.getMany(num.intValue());
+		long end = System.currentTimeMillis();
+		long procTime = end - start;
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("Stats", Long.toString(procTime));
+		
+		return new ResponseEntity<List<UUIDModel>>(returnVal, responseHeaders, HttpStatus.OK);
 	}
+	
+	
 
 }

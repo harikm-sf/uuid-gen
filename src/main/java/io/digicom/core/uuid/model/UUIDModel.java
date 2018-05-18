@@ -1,6 +1,7 @@
 package io.digicom.core.uuid.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,13 +11,14 @@ public class UUIDModel implements Serializable {
 	private static final long serialVersionUID = -4704777149181849049L;
 	private UUID uuid;
 	
-	private Date dateTime;
-	
 	private String base64;
 	
 	private String md5Hex;
 	
 	private byte[] md5;
+	
+	private Date dateTime;
+	
 
 	public UUID getUuid() {
 		return uuid;
@@ -65,11 +67,11 @@ public class UUIDModel implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UUIDModel [uuid=" + uuid + ", dateTime=" + dateTime + ", base64=" + base64 + ", md5Hex=" + md5Hex
-				+ ", md5=" + md5 + "]";
+		return "UUIDModel [uuid=" + uuid + ", base64=" + base64 + ", md5Hex=" + md5Hex + ", md5=" + Arrays.toString(md5)
+				+ ", dateTime=" + dateTime + "]";
 	}
 
-	
+
 
 	
 	

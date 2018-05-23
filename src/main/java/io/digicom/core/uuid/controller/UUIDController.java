@@ -38,6 +38,10 @@ public class UUIDController  {
 		long end = System.currentTimeMillis();
 		long procTime = end - start;
 		
+		//long totalGenTime =0;
+		
+		//returnVal.forEach(model -> totalGenTime += model.getProcTime());
+		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("Stats", Long.toString(procTime));
 		

@@ -42,18 +42,21 @@ public class UUIDFactoryImpl extends BaseService implements UUIDFactory {
 	public List<UUIDModel> getMany(int num) throws UnsupportedEncodingException {
 		List<UUIDModel> uuidList =  hci.getList("UUIDLIST");
 		int initSize = uuidList.size();
+		
 		if(num > initSize) {
 			logger.debug("Have to add more to the list right now");
 			uuidListManager.addUUIDs(num - initSize);
 		}
+		
 		List<UUIDModel> retVal = new ArrayList<UUIDModel>();
+		
 		for(int i = 0; i< num; i++) {
 			retVal.add(uuidList.get(0));
 			uuidList.remove(0);
 		}
+		
 		Future<List<UUIDModel>> updatedList = uuidListManager.addUUIDs(num);
 		
-
 		logger.debug("List size before/after :" + initSize + "/"+uuidList.size());
 		return retVal;
 		

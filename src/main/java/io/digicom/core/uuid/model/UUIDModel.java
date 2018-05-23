@@ -19,6 +19,17 @@ public class UUIDModel implements Serializable {
 	
 	private Date dateTime;
 	
+	private long procTime;
+	
+
+	public long getProcTime() {
+		return procTime;
+	}
+
+	public UUIDModel setProcTime(long procTime) {
+		this.procTime = procTime;
+		return this;
+	}
 
 	public UUID getUuid() {
 		return uuid;

@@ -15,21 +15,21 @@ public class ListEventHandler extends BaseHandler implements ItemListener<UUIDMo
 	
 	@Override
 	public void itemAdded(ItemEvent<UUIDModel> model) {
-		String source  =(String) model.getSource();
-		logger.trace("Item added :" + model.toString() + " to " + source);
-		logsize();
+		//String source  =(String) model.getSource();
+		//logger.trace("Item added :" + model.toString() + " to " + source);
+		//logsize();
 	}
 
 	@Override
 	public void itemRemoved(ItemEvent<UUIDModel> itemEvent) {
-		String source  =(String) itemEvent.getSource();
-		logger.trace("Item removed :" + itemEvent.getItem() + " from " + source);
-		logsize();
+		//String source  =(String) itemEvent.getSource();
+		//logger.trace("Item removed :" + itemEvent.getItem() + " from " + source);
+		//logsize();
 	}
 	
 	private void logsize() {
-		HazelcastInstance h = Hazelcast.getHazelcastInstanceByName("UUIDGEN");
-		logger.debug("Size of the list : "+h.getList("UUIDLIST").size());
+		//HazelcastInstance h = Hazelcast.getHazelcastInstanceByName("UUIDGEN");
+		//logger.debug("Size of the list : "+h.getList("UUIDLIST").size());
 	}
 
 

@@ -1,11 +1,14 @@
 package io.digicom.core.uuid.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.concurrent.Future;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import com.hazelcast.core.HazelcastInstance;
@@ -33,12 +36,13 @@ public class UUIDListManagerImpl extends BaseService implements UUIDListManager 
 	
 	@Override
 	@Async
-	public void addUUIDs(int num) throws UnsupportedEncodingException {
+	public Future<List<UUIDModel>> addUUIDs(int num) throws UnsupportedEncodingException {
 		IList<UUIDModel> list = hci.getList("UUIDLIST");
 		for(int i = 0; i < num ; i++) {
 			UUIDModel model = (modelGenerator.getUUIDModel());
 			list.add(model);
 		}
+		return new AsyncResult<>(list);
 	}
 	
 	@Override

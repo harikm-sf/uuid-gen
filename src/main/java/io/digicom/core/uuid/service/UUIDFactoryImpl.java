@@ -3,6 +3,8 @@ package io.digicom.core.uuid.service;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,17 +41,20 @@ public class UUIDFactoryImpl extends BaseService implements UUIDFactory {
 	@Override
 	public List<UUIDModel> getMany(int num) throws UnsupportedEncodingException {
 		List<UUIDModel> uuidList =  hci.getList("UUIDLIST");
-		if(num > uuidList.size()) {
+		int initSize = uuidList.size();
+		if(num > initSize) {
 			logger.debug("Have to add more to the list right now");
-			uuidListManager.addUUIDs(num - uuidList.size());
+			uuidListManager.addUUIDs(num - initSize);
 		}
 		List<UUIDModel> retVal = new ArrayList<UUIDModel>();
 		for(int i = 0; i< num; i++) {
 			retVal.add(uuidList.get(0));
 			uuidList.remove(0);
 		}
-		uuidListManager.addUUIDs(num);
-		logger.debug("RETURNING RESULT");
+		Future<List<UUIDModel>> updatedList = uuidListManager.addUUIDs(num);
+		
+
+		logger.debug("List size before/after :" + initSize + "/"+uuidList.size());
 		return retVal;
 		
 	}

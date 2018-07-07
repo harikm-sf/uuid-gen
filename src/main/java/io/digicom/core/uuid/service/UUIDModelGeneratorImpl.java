@@ -32,7 +32,7 @@ public class UUIDModelGeneratorImpl extends BaseService implements UUIDModelGene
 			.setBase64(base64)
 				.setMd5(md5)
 					.setMd5Hex(md5Hex)
-						.setProcTime(procTime);
+						.setProcTimeMillis(procTime);
 		
 		logger.trace("Generated UUID Model :" + model.toString());
 		return model;

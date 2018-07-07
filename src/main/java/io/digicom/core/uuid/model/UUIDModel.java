@@ -22,12 +22,12 @@ public class UUIDModel implements Serializable {
 	private long procTimeMillis;
 	
 
-	public long getProcTime() {
+	public long getProcTimeMillis() {
 		return procTimeMillis;
 	}
 
-	public UUIDModel setProcTime(long procTime) {
-		this.procTimeMillis = procTime;
+	public UUIDModel setProcTimeMillis(long procTimeMillis) {
+		this.procTimeMillis = procTimeMillis;
 		return this;
 	}
 
@@ -79,8 +79,10 @@ public class UUIDModel implements Serializable {
 	@Override
 	public String toString() {
 		return "UUIDModel [uuid=" + uuid + ", base64=" + base64 + ", md5Hex=" + md5Hex + ", md5=" + Arrays.toString(md5)
-				+ ", dateTime=" + dateTime + "]";
+				+ ", dateTime=" + dateTime + ", procTimeMillis=" + procTimeMillis + "]";
 	}
+
+	
 
 
 

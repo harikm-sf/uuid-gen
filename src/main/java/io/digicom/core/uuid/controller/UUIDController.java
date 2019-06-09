@@ -36,10 +36,10 @@ public class UUIDController  {
 		num = (num == null || num <= 0) ? 1 : num;
 		List<UUIDModel> returnVal = uuidFactory.getMany(num.intValue());
 		long end = System.currentTimeMillis();
-		long procTime = end - start;
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("Stats", Long.toString(procTime));
+		long procTime = end - start;
+		responseHeaders.set("TotalTimeMillis", Long.toString(procTime));
 		
 		return new ResponseEntity<List<UUIDModel>>(returnVal, responseHeaders, HttpStatus.OK);
 	}

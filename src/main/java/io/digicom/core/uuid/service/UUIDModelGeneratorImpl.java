@@ -19,18 +19,20 @@ public class UUIDModelGeneratorImpl extends BaseService implements UUIDModelGene
 	@Override
 	//@Async
 	public UUIDModel getUUIDModel() throws UnsupportedEncodingException {
+		long start = System.currentTimeMillis();
 		UUIDModel model = new UUIDModel();
 		UUID uuid =UUID.randomUUID();
 		byte[] bytesOfUUID = uuid.toString().getBytes("UTF-8");
 		String base64 = Base64.encodeBase64String(bytesOfUUID);
 		String md5Hex = DigestUtils.md5DigestAsHex(bytesOfUUID);
 		byte [] md5 = DigestUtils.md5Digest(bytesOfUUID);
-		
+		long procTime = System.currentTimeMillis() - start;
 		model.setUuid(uuid)
 		.setDateTime(new Date())
 			.setBase64(base64)
 				.setMd5(md5)
-					.setMd5Hex(md5Hex);
+					.setMd5Hex(md5Hex)
+						.setProcTimeMillis(procTime);
 		
 		logger.trace("Generated UUID Model :" + model.toString());
 		return model;
